@@ -1,0 +1,17 @@
+# Build output
+/build/
+/out/
+/test_out/
+
+# Test harness frames and logs
+*.bmp
+*.log
+fakehost_*
+
+# The Ultimate ASI Loader download (only its dinput8.dll is used)
+third_party/asi_loader/ual.zip
+
+# Editors
+.vs/
+.vscode/
+*.user

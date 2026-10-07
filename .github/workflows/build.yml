@@ -1,0 +1,56 @@
+# Builds GModLight on every push and pull request. Pushing a version tag (v0.1.1, ...)
+# also publishes a GitHub release with the download zip (see tools/release.ps1).
+name: build
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write  # to publish releases
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true  # MinHook, gmod-module-base
+
+      - name: Check the tag matches VERSION
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: pwsh
+        run: |
+          $v = (Get-Content VERSION -Raw).Trim()
+          if ("v$v" -ne "${{ github.ref_name }}") { throw "Tag ${{ github.ref_name }} but VERSION says $v" }
+
+      - name: Build and package
+        shell: pwsh
+        run: ./tools/package.ps1
+
+      - name: Upload the zip (every build)
+        uses: actions/upload-artifact@v4
+        with:
+          name: GModLight
+          path: out/*.zip
+
+      - name: Release notes from CHANGELOG.md
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: pwsh
+        run: |
+          $v = (Get-Content VERSION -Raw).Trim()
+          $text = Get-Content CHANGELOG.md -Raw
+          $m = [regex]::Match($text, "(?ms)^## $([regex]::Escape($v))\s*\r?\n(.*?)(?=^## |\z)")
+          $notes = if ($m.Success) { $m.Groups[1].Value.Trim() } else { "GModLight $v" }
+          $notes += "`n`n**Install:** download GModLight-$v.zip below, unzip it, close both games and double-click Install.bat. Needs Dying Light and Garry's Mod (64-bit branch). Single player only."
+          Set-Content release_notes.md $notes
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: out/*.zip
+          body_path: release_notes.md

@@ -1,0 +1,6 @@
+[submodule "third_party/minhook"]
+	path = third_party/minhook
+	url = https://github.com/TsudaKageyu/minhook.git
+[submodule "third_party/gmod-module-base"]
+	path = third_party/gmod-module-base
+	url = https://github.com/Facepunch/gmod-module-base.git
