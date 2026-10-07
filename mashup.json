@@ -1,0 +1,195 @@
+{
+  "id": "sigf/gmodlight",
+  "version": "0.1.0",
+  "name": "GModLight",
+  "tagline": "Garry's Mod's physgun, weapons and spawn menu inside Dying Light: fling zombies instead of fighting them.",
+  "how_to_play": [
+    "Dying Light stays the real game; Garry's Mod runs hidden next to it and draws its physgun, weapons and hands into your view.",
+    "Press Play: Dying Light starts, and Garry's Mod starts by itself, hidden, at the main menu. Load into a single player game and press F2.",
+    "F2 Garry's Mod hands on or off. Mouse buttons fire, or grab and freeze with the physgun; the wheel picks weapons or pushes and pulls what you hold.",
+    "F1 or hold Q opens the spawn menu, hold C the context menu, 1-0 weapon slots, R reload or unfreeze, E use or rotate, Z undo.",
+    "Grab zombies with the physgun and throw them into walls, or shoot them with rockets, grenades and the crossbow. F7 hides everything Garry's Mod draws."
+  ],
+  "kind": "passthrough",
+  "games": [
+    {
+      "game": "dyinglight",
+      "role": "host",
+      "label": "Dying Light",
+      "engine": "Dying Light (Chrome Engine 6, D3D11, x64) + ASI plugin GModLight (C++, Ultimate ASI Loader)",
+      "apps": {
+        "steam": "239140"
+      },
+      "runtime": "current Steam build (no version pinned upstream; engine_x64_rwdi.dll exports and class names resolved at runtime)"
+    },
+    {
+      "game": "gmod",
+      "role": "guest",
+      "label": "Garry's Mod",
+      "engine": "Garry's Mod x86-64 branch + binary module gmcl_gmodlight + Lua addon",
+      "apps": {
+        "steam": "4000"
+      },
+      "runtime": "\"x86-64 - Chromium + 64-bit binaries\" beta branch; started hidden by the Dying Light plugin, never launched by the app"
+    }
+  ],
+  "requires": [
+    {
+      "id": "ultimate-asi-loader",
+      "version": "9.7.4",
+      "license": "MIT, shipped unchanged as xinput1_3.dll",
+      "page": "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/tag/v9.7.4",
+      "note": "loads GModLight.asi in Dying Light; installed into the Dying Light folder by the app"
+    },
+    {
+      "id": "gmod-x64",
+      "page": "https://store.steampowered.com/app/4000",
+      "note": "Garry's Mod on the 64-bit beta branch: Steam > Garry's Mod > Properties > Betas > \"x86-64 - Chromium + 64-bit binaries\""
+    }
+  ],
+  "install": [
+    {
+      "game": "dyinglight",
+      "strategy": "game-dir-snapshot",
+      "files": [
+        {
+          "src": "gmodlight-dyinglight.zip",
+          "dst": "{game}",
+          "unpack": true,
+          "contents": [
+            {
+              "path": "GModLight.asi",
+              "sha256": "c296486eda893af046007c34a2a325034bb4bf6b0b12a4a4a4e94299dfd5e134"
+            },
+            {
+              "path": "GModLight.ini",
+              "sha256": "8bfe9b47f543802d492c7120c88e280b9f08fac7c4a37bc2511dde516a06bc39"
+            },
+            {
+              "path": "GModLight/LICENSE-MinHook.txt",
+              "sha256": "d5c2224982b0b95a16b098a561335fa93f3eaf4d0aa964b7843edb986df78dc8"
+            },
+            {
+              "path": "GModLight/LICENSE-UltimateASILoader.txt",
+              "sha256": "ceca73c504e39084b0b80d2a437aea9988313d1915418d3c629c3e4a8313f5a1"
+            },
+            {
+              "path": "GModLight/LICENSE.txt",
+              "sha256": "d9036e1519ea83bb64b1864136d0959dfa97dfd248beb938663983979e4b69fe"
+            },
+            {
+              "path": "GModLight/THIRD_PARTY_NOTICES.md",
+              "sha256": "a1e6b6165d78cab6e72efc0168977fcfb51831a4e5afa0307cc89b17a64783b9"
+            },
+            {
+              "path": "xinput1_3.dll",
+              "sha256": "031a3e5576d91dce1e438d36b9a3d462c7334ab4791990a8ff1e3ddc0e132daf"
+            }
+          ],
+          "url": "https://github.com/SIGFAI/gmodlight/releases/download/v0.1.0/gmodlight-dyinglight.zip",
+          "sha256": "0d84070b0a995b92f16f85d011f822679418468e721f6cb0ee40f79c4f78a5c3",
+          "size": 595258
+        }
+      ]
+    },
+    {
+      "game": "gmod",
+      "strategy": "game-dir-snapshot",
+      "files": [
+        {
+          "src": "gmodlight-gmod.zip",
+          "dst": "{game}",
+          "unpack": true,
+          "contents": [
+            {
+              "path": "garrysmod/addons/gmodlight/LICENSE.txt",
+              "sha256": "d9036e1519ea83bb64b1864136d0959dfa97dfd248beb938663983979e4b69fe"
+            },
+            {
+              "path": "garrysmod/addons/gmodlight/lua/autorun/gmodlight.lua",
+              "sha256": "b40f7318373b18b72070aa8a7ac34fa61634f11b4a11be41639d2000993a0d96"
+            },
+            {
+              "path": "garrysmod/addons/gmodlight/lua/entities/gml_proxy.lua",
+              "sha256": "e35b7a4f87a7d737141fd1cb259a3ccae59df46b9e47d385d512b50af85ff038"
+            },
+            {
+              "path": "garrysmod/lua/bin/gmcl_gmodlight_win64.dll",
+              "sha256": "36e07abda93ef36c24eabe04414743bd597d8b2bc7910b063f8d5b1f1563f32f"
+            },
+            {
+              "path": "garrysmod/lua/bin/gmsv_gmodlight_win64.dll",
+              "sha256": "36e07abda93ef36c24eabe04414743bd597d8b2bc7910b063f8d5b1f1563f32f"
+            }
+          ],
+          "url": "https://github.com/SIGFAI/gmodlight/releases/download/v0.1.0/gmodlight-gmod.zip",
+          "sha256": "ab761f81b525f10620ab71231491d4ec9026aeb35354e61ef9778c5f112e3cfd",
+          "size": 220631
+        }
+      ]
+    }
+  ],
+  "launch": [
+    {
+      "game": "dyinglight",
+      "args": []
+    }
+  ],
+  "files": [
+    {
+      "name": "gmodlight-dyinglight.zip",
+      "url": "https://github.com/SIGFAI/gmodlight/releases/download/v0.1.0/gmodlight-dyinglight.zip",
+      "sha256": "0d84070b0a995b92f16f85d011f822679418468e721f6cb0ee40f79c4f78a5c3",
+      "size": 595258
+    },
+    {
+      "name": "gmodlight-gmod.zip",
+      "url": "https://github.com/SIGFAI/gmodlight/releases/download/v0.1.0/gmodlight-gmod.zip",
+      "sha256": "ab761f81b525f10620ab71231491d4ec9026aeb35354e61ef9778c5f112e3cfd",
+      "size": 220631
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/GooseMcGee/DyingLight-GMod",
+    "license": "MIT AND BSD-2-Clause",
+    "upstream_license": "MIT",
+    "tag": "v0.1.0",
+    "commit": "e3ad71bc2e38141321a9804192d7864ec6c96bde",
+    "hosted": "https://github.com/SIGFAI/gmodlight",
+    "bundled": [
+      {
+        "name": "Ultimate ASI Loader",
+        "version": "9.7.4",
+        "repo": "https://github.com/ThirteenAG/Ultimate-ASI-Loader",
+        "tag": "v9.7.4",
+        "license": "MIT"
+      },
+      {
+        "name": "MinHook",
+        "repo": "https://github.com/TsudaKageyu/minhook",
+        "commit": "8af6b4acae5a9388fd742b56fa79ece89d96f823",
+        "license": "BSD-2-Clause",
+        "note": "statically linked into GModLight.asi and gmcl_gmodlight_win64.dll"
+      }
+    ]
+  },
+  "media": {},
+  "built_by": {
+    "author": "GooseMcGee",
+    "authors": [
+      "GooseMcGee",
+      "akingery15"
+    ],
+    "packaged_by": "SIGF"
+  },
+  "idea_by": "GooseMcGee",
+  "built_at": "2026-10-07T00:00:00.000Z",
+  "status": "beta",
+  "issues": "https://github.com/GooseMcGee/DyingLight-GMod/issues",
+  "notes": [
+    "You need Dying Light and Garry's Mod on Steam (Windows), with Garry's Mod on the 64-bit beta branch: Steam > Garry's Mod > Properties > Betas > \"x86-64 - Chromium + 64-bit binaries\".",
+    "Single player only: set Dying Light's game visibility to private and never join or host co-op with it installed. Do not start Garry's Mod yourself first; let Dying Light start it.",
+    "Restore before playing Garry's Mod online: it removes the GModLight addon and module from Garry's Mod and the ASI loader (xinput1_3.dll) from Dying Light. Keys and options: GModLight.ini in the Dying Light folder.",
+    "Beta (first public version). Report bugs to the authors on the upstream issue tracker with Dying Light\\GModLight.log and GarrysMod\\garrysmod\\gmodlight.log."
+  ]
+}
